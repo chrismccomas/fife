@@ -1,0 +1,35 @@
+{% extends "base_fife.html" %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block sidebar %}
+	
+	{% if sam %}
+	<ul id="vertNav">
+			<li><a href="/fife/audio/upload/">Upload Audio</a></li>
+	</ul>
+	{% endif %}
+	{% include "fife/faculty_sidebar.html" %}
+	
+{% endblock %}
+
+{% block content %}
+	<h1>Welcome</h1>
+	<p>Welcome {{ user.first_name }} {{ user.last_name }}. View my <a href="http://sop.ucwv.edu/fife/">courses</a>, edit my <a href="/fife/faculty/{{ faculty.pk }}/edit/">office hours/location</a>, or <a href="/mayberry/logout/">logout</a>.
+
+	<h2 id="my-courses">My Courses</h2>
+	<ul id="recent-announcements">
+		{% if course %}
+		{% for course in course %}
+		<li><strong>{{ course.term.short }}  {{ course.title }}</strong>
+			<br /><a href="{{ course.get_absolute_url }}">View Course</a> | <a href="{{ course.get_absolute_url }}#lectures">View Lectures</a> | <a href="{{ course.get_absolute_url }}#audio">View Audio</a> | <a href="{{ course.get_absolute_url }}#announcements">View Announcements</a> | <strong><a href="{{ course.get_absolute_url }}edit/">Edit Course Information</a></strong></li>
+		</li>
+		{% endfor %}
+		{% else %}
+			<li>You currently are not assigned as a faculty member for any courses.</li>
+		{% endif %}
+	</ul>
+	<div style="height: 25px;"></div>
+{% endblock %}

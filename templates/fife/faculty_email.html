@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+"http://www.w3.org/TR/html4/loose.dtd"> 
+<html>
+<head>
+</head>
+<body>
+<style type="text/css"> 
+<!--
+body,td,th {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333;
+	line-height: 135%;
+}
+</style>
+<p style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">Dear {{ firstname }} {{ lastname }},</p>
+
+<p style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">We've recently launched a new backend piece of the website for lectures, audio, etc. The new application is called Fife. Below is your username and password to login and view the courses that you'll be lecturing in this fall, if there is a course not showing up for you that you are lecturing in please just shoot me an email and I'll get you added ASAP.</p>
+
+<p style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">I will be going over Fife at Wednesday's faculty development session, but I can answer any questions you may have in the mean time as well. There might be a few bugs that are still to be ironed out, if you notice anything out of place, or incorrect please let me know so I can fix it.</p>
+
+<p style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">Username: {{ username }}<br />Password: {{ password }}</p>
+
+<p style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">To login to Fife please visit http://sop.ucwv.edu/fife/ once you login initially with the password above you can visit this <a href="http://sop.ucwv.edu/fife/password/reset/">page to change your password</a>.</p>
+
+<p style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">Thanks,</p>
+<p style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">Christopher McComas</p>
+</body>
+</html>

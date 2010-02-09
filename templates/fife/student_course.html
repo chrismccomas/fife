@@ -1,0 +1,98 @@
+{% extends "base_fife.html" %}
+
+{% block title %}{{ course.title }} - {% endblock %}
+
+{% block header %}
+<style type="text/css"> 
+	div.section { background: #f1f1f1; border: 1px solid #ccc; border-top: none; padding: 5px 8px; margin: 0; margin-bottom: 10px;}
+	div.section p { padding: 8px 0; margin: 0; border-bottom: 1px solid #ddd; font-size: 1.2em; }
+	label { line-height: 135%; margin: 0; padding: 0; color: #555; }
+	label.second { margin-left: 10px; }
+	label.text { display: block; margin: 5px 0; }
+	input.text-input { border: 1px solid #ccc;  color: #444; padding: 3px; margin: 0;}
+	input.text-input:focus { border: 1px solid #9d1f41;}
+	span.help-text { color: #888; font-size: 11px; margin-left: 15px;}
+	span.help-text-btm { color: #888; font-size: 11px; margin: 0; padding: 5px 0;}
+	div.submit-bar { padding: 8px 5px; margin: 5px 0 10px 0; background: #ccc; border: 1px solid #aaa; text-align: right; }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+	
+	{% include "fife/student_sidebar.html" %}
+	
+{% endblock %}
+
+{% block content %}
+	<h1>Welcome</h1>
+	<p>Welcome {{ user.first_name }} {{ user.last_name }}. View my <a href="http://sop.ucwv.edu/fife/">courses</a>, recently added <a href="#lectures">lecture notes</a>, <a href="#audio">audio</a>, <a href="#announcements">announcements</a>, or <a href="/mayberry/logout/">logout</a>.
+
+	<h2 id="my-courses">{{ course.title }}</h2>
+	<ul id="recent-announcements">
+		<li><strong>Course Coordinator: </strong>{% for instructor in course.course_coordinator.all %}<a href="/fife/faculty/{{ instructor.pk }}/">{{ instructor.user.first_name }} {{ instructor.user.last_name }}</a>{% if forloop.last %}{% else %}, {% endif %}{% endfor %}</li>
+		{% if course.instructor %}<li><strong>Instructors: </strong>{% for instructor in course.instructor.all %}<a href="/fife/faculty/{{ instructor.pk }}/">{{ instructor.user.first_name }} {{ instructor.user.last_name }}</a>{% if forloop.last %}{% else %}, {% endif %}{% endfor %}</li>{% endif %}
+		<li><strong>Course Syllabus: </strong>{% if course.syllabus %}<a href="{{ MEDIA_URL }}{{ course.syllabus }}">Syllabus</a>{% else %}No Syllabus{% endif %}</li>
+		<li><strong>Class Meeting Time and Location: </strong>{{ course.class_schedule }}, {{ course.class_location }}</li>
+		<li><strong>Credit Hours: </strong>{{ course.credit_hours }}</li>
+		<li><strong>Course Description: </strong>{{ course.course_description }}</li>
+		<li><strong>Required Books: </strong>{% if books %}{% for book in books %}{% if book.link %}<a href="{{ book.link }}">{{ book.title }}</a>{% else %}{{ book.title }}{% endif %}{% if forloop.last %}{% else %}, {% endif %}{% endfor %}{% else %}No required books{% endif %}</li>
+	</ul>
+	<div style="height: 25px;"></div>
+	<h2 id="emailalerts">Email Alerts for {{ course.short }}</h2>
+	<form method="post" enctype="multipart/form-data" action="."> 
+		<div class="section">
+			<p><label for="id_audio_alert">Audio alert:</label> {{ form.audio_alert }}
+				<label for="id_lecture_alert" class="second">Lecture alert:</label> {{ form.lecture_alert }}
+				<input type="hidden" name="announcement_alert" id="announcement_alert" value="True">
+			<div class="submit-bar"> 
+				<input type="submit" value="Save Alerts for {{ course.short }}" /> 
+			</div> 
+		</div>
+	</form>
+	{% if resources %}
+	<div style="height: 25px;"></div>
+	<h2 id="my-courses">Course Resources</h2>
+	<a name="resources"></a><ul id="recent-announcements">
+		{% for resource in resources %}
+			<li>{% if resource.document %}<a  name="resource-{{ resource.pk }}" href="{{ MEDIA_URL }}{{ resource.document }}">{{ resource.title }}</a>{% else %}{{ resource.title }}{% endif %} from {{ resource.created_date|date:"l F j, Y" }} by {{ resource.user.first_name }} {{ resource.user.last_name }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	<div style="height: 25px;"></div>
+	<h2 id="lectures">Lectures</h2>
+	<a name="lectures"></a><ul id="recent-announcements">
+		{% if lectures %}
+		{% for lecture in lectures %}
+		{% if lecture.title %}
+			<li><a name="lecture-{{ lecture.pk }}" href="{{ MEDIA_URL }}{{lecture.powerpoint }}">{{ lecture.title }}</a> from {{ lecture.lecture_date|date:"l F j, Y" }} by {% if lecture.speaker %}{{ lecture.speaker }}{% else %}{{ lecture.user.first_name }} {{ lecture.user.last_name }}{% endif %}</li>
+		{% else %}
+			<li><a name="lecture-{{ lecture.pk }}" href="{{ MEDIA_URL }}{{lecture.powerpoint }}">Lecture</a> from {{ lecture.lecture_date|date:"l F j, Y" }} by {% if lecture.speaker %}{{ lecture.speaker }}{% else %}{{ lecture.user.first_name }} {{ lecture.user.last_name }}{% endif %}</li>
+		{% endif %}
+		{% endfor %}
+		{% else %}
+			<li>Currently no lectures for {{ course.title }}</li>
+		{% endif %}
+	</ul>
+	<div style="height: 25px;"></div>
+	<h2 id="audio">Audio</h2>
+	<a name="audio"></a><ul id="recent-announcements">
+		{% if audio %}
+		{% for audio in audio %}
+			<li><a name="audio-{{ audio.pk }}" href="{{ MEDIA_URL }}{{ audio.audio }}">Audio</a> from {{ audio.audio_date|date:"l F j, Y" }}</li>
+		{% endfor %}
+		{% else %}
+			<li>Currently no audio for {{ course.title }}</li>
+		{% endif %}
+	</ul>
+	<div style="height: 25px;"></div>
+	<h2 id="announcements">Announcements</h2>
+	<a name="announcements"></a><ul id="recent-announcements">
+		{% if announcements %}
+		{% for announcement in announcements %}
+		<li><a href="{{ announcement.get_absolute_url }}">{{ announcement.title }}</a> on {{ announcement.created_date|date:"l F j, Y" }}</li>
+		{% endfor %}
+		{% else %}
+			<li>Currently no announcements for {{ course.title }}</li>
+		{% endif %}
+	</ul>
+{% endblock %}

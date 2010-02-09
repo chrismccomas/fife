@@ -1,0 +1,26 @@
+{% extends "base_fife.html" %}
+
+{% block title %}{{ faculty.user.first_name }} {{ faculty.user.last_name }} - {% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block sidebar %}
+	
+	{% include "fife/student_sidebar.html" %}
+	
+{% endblock %}
+
+{% block content %}
+	<h1>Welcome</h1>
+	<p>Welcome {{ user.first_name }} {{ user.last_name }}. View my <a href="http://sop.ucwv.edu/fife/">courses</a> or <a href="/mayberry/logout/">logout</a>.
+
+	<h2 id="my-courses">{{ this_faculty.user.first_name }} {{ this_faculty.user.last_name }}</h2>
+	<ul id="recent-announcements">
+		<li><strong>Office: </strong> {{ this_faculty.office_location }} </li>
+		<li><strong>Office Hours: </strong> {{ this_faculty.office_hours }}</li>
+		<li><strong>Office Phone: </strong>{{ this_faculty.phone_number }}</li>
+		<li><strong>Email Address: </strong><a href="mailto:{{ this_faculty.user.email }}">{{ this_faculty.user.email }}</a></li>
+	</ul>
+{% endblock %}
