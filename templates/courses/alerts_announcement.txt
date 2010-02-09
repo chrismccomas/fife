@@ -1,0 +1,7 @@
+{{  student.user.first_name }}:
+ 
+A new lecture {{ new_announcement.title }} has been added to the course {{ course.short }}.
+ 
+You can view the announcement here http://sop.ucwv.edu/fife/announcements/{{ new_announcement.pk }}/
+
+

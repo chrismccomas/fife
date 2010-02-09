@@ -1,0 +1,30 @@
+{% extends "base_fife.html" %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block sidebar %}
+	
+	
+{% endblock %}
+
+{% block content %}
+
+<h2>Login</h2>
+	
+	<form method="post" action=".">
+		<div class="section">
+			<p>Please login below to access your courses, if you've forgotten your password you can have it <a href="/fife/password/reset/"><strong>reset</strong></a> and emailed to you.</p>
+	 
+		{% if form.errors %}
+			<p class="errors">Your username and password didn't match. Please try again.</p>
+		{% endif %}
+		<p><label for="id_username">Username:</label> <input class="text-input" id="id_username" type="text" name="username" maxlength="30" /></p> 
+		<p><label for="id_password">Password:</label> <input class="text-input" type="password" name="password" id="id_password" /></p> 
+		<input type="submit" value="Login" /> 
+		<input type="hidden" name="next" value="/fife/" /> 
+	
+</div>
+</form>
+{% endblock %}

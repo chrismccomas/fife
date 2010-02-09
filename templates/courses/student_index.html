@@ -1,0 +1,63 @@
+{% extends "base_fife.html" %}
+
+{% block title %}{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block sidebar %}
+	
+	{% include "fife/student_sidebar.html" %}
+	
+{% endblock %}
+
+{% block content %}
+	<h1>Welcome </h1>
+	<p>Welcome {{ user.first_name }} {{ user.last_name }}. View my <a href="http://sop.ucwv.edu/fife/">courses</a>, recently added <a href="#lectures">lecture notes</a>, <a href="#audio">audio</a>, <a href="#announcements">announcements</a>, or <a href="/mayberry/logout/">logout</a>.
+
+	<h2>My Courses</h2>
+	<ul id="recent-announcements">
+		{% for course in courses %}
+		<li><strong>{{ course.term.short }}  {{ course.title }}</strong>
+			<br /><a href="http://sop.ucwv.edu/fife/course/{{ course.pk }}/">View Course</a> | <a href="http://sop.ucwv.edu/fife/course/{{ course.pk }}/#lectures">View Lectures</a> | <a href="http://sop.ucwv.edu/fife/course/{{ course.pk }}/#audio">View Audio</a> | <a href="http://sop.ucwv.edu/fife/course/{{ course.pk }}/#announcements">View Announcements</a></li>
+		{% endfor %}
+	</ul>
+	<div style="height: 25px;"></div>
+	<h2 id="lectures">Recently Uploaded Lectures</h2>
+	<ul id="recent-announcements">
+		{% if lectures %}
+		{% for lecture in lectures %}
+		{% if lecture.title %}
+			<li><strong>{{ lecture.course.short }} - </strong> <a href="{{ MEDIA_URL }}{{lecture.powerpoint }}">{{ lecture.title }}</a> from {{ lecture.lecture_date|date:"l F j, Y" }}</li>
+		{% else %}
+			<li><strong>{{ lecture.course.short }} - </strong> <a href="{{ MEDIA_URL }}{{lecture.powerpoint }}">Lecture</a> from {{ lecture.lecture_date|date:"l F j, Y" }}</li>
+		{% endif %}
+		{% endfor %}
+		{% else %}
+			<li>Currently no recent lectures.</li>
+		{% endif %}
+	</ul>
+	<div style="height: 25px;"></div>
+	<h2 id="audio">Recently Uploaded Audio</h2>
+	<ul id="recent-announcements">
+		{% if audio %}
+		{% for audio in audio %}
+			<li><strong>{{ audio.course.short }} - </strong> <a href="{{ MEDIA_URL }}{{ audio.audio }}">Audio</a> from {{ audio.audio_date|date:"l F j, Y" }}</li>
+		{% endfor %}
+		{% else %}
+			<li>Currently no recent audio.</li>
+		{% endif %}
+	</ul>
+	<div style="height: 25px;"></div>
+	<h2 id="announcements">Recently Announcements</h2>
+	<ul id="recent-announcements">
+		{% if announcements %}
+		{% for announcement in announcements %}
+		<li><strong>{{ announcement.course.short }} - </strong><a href="{{ announcement.get_absolute_url }}">{{ announcement.title }}</a> on {{ announcement.created_date|date:"l F j, Y" }}</li>
+		{% endfor %}
+		{% else %}
+			<li>Currently no recent announcements.</li>
+		{% endif %}
+	</ul>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base_fife.html" %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block sidebar %}
+	
+	<ul id="vertNav">
+		<li><a href="{{ course.get_absolute_url }}">Back to Course Page</a></li>
+	</ul>
+	
+	{% include "fife/faculty_sidebar.html" %}
+	
+{% endblock %}
+
+{% block content %}
+	<h1>Welcome</h1>
+	<p>Welcome {{ user.first_name }} {{ user.last_name }}. View my <a href="http://sop.ucwv.edu/fife/">courses</a>, recently added <a href="#lectures">lecture notes</a>, <a href="#audio">audio</a>, <a href="#announcements">announcements</a>, or <a href="/mayberry/logout/">logout</a>.
+
+	<h2 id="my-courses">{{ announcement.course.short }}: {{ announcement.title }}</h2>
+	<ul id="recent-announcements">
+		<li><strong>Date: </strong> {{ announcement.created_date|date:"l F j, Y" }}</li>
+		<li>{{ announcement.message|linebreaks }}
+			<a href=""><a href="{{ announcement.course.get_absolute_url }}">{{ announcement.course.short }} Page</a></li>
+	</ul>
+		
+{% endblock %}

@@ -1,0 +1,11 @@
+<ul id="vertNav">
+	<li><a href="/fife/">Fife Home</a></li>
+	<li><a href="/mayberry/password/change/">Change Password</a></li>
+	<li><a href="/mayberry/logout/">Logout</a></li>
+</ul>
+
+<ul id="vertNav">
+{% for link in sidebar %}
+	<li><a href="{{ link.url }}">{{ link.title }}</a></li>
+{% endfor %}
+</ul>

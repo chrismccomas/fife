@@ -1,0 +1,51 @@
+{% extends "base_fife.html" %}
+
+{% block title %}Edit {{ course.title }} - {% endblock %}
+
+{% block header %}
+<style type="text/css"> 
+	div.section { background: #f1f1f1; border: 1px solid #ccc; border-top: none; padding: 5px 8px; margin: 0; margin-bottom: 10px;}
+	div.section p { padding: 8px 0; margin: 0; border-bottom: 1px solid #ddd; font-size: 1.2em; }
+	label { line-height: 135%; margin: 0; padding: 0; color: #555; }
+	label.second { margin-left: 10px; }
+	label.text { display: block; margin: 5px 0; }
+	input.text-input { border: 1px solid #ccc;  color: #444; padding: 3px; margin: 0;}
+	input.text-input:focus { border: 1px solid #9d1f41;}
+	span.help-text { color: #888; font-size: 11px; margin-left: 15px;}
+	span.help-text-btm { color: #888; font-size: 11px; margin: 0; padding: 5px 0;}
+	div.submit-bar { padding: 8px 5px; margin: 5px 0 10px 0; background: #ccc; border: 1px solid #aaa; text-align: right; }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+	
+	{% include "fife/faculty_sidebar.html" %}
+	
+{% endblock %}
+
+{% block content %}
+	<h1>Welcome</h1>
+	<p>Welcome {{ user.first_name }} {{ user.last_name }}. View my <a href="http://sop.ucwv.edu/fife/">courses</a> or <a href="/mayberry/logout/">logout</a>.
+
+	<h2 id="my-courses">{{ course.title }}</h2>
+	<form method="post" enctype="multipart/form-data" action="."> 
+		<div class="section"> 
+			<p><label for="id_title">Full Title:</label> {{ course_form.title }}
+				<br /><span class="help-text-btm">{{ course_form.title.help_text }}</span></p>
+			<p><label for="id_short">Short Title:</label> {{ course_form.short }}
+				<br /><span class="help-text-btm">{{ course_form.short.help_text }}</span></p>
+			<p><label for="id_course_description">Course description:</label><br />{{ course_form.course_description }}</p>
+			<p><label for="id_credit_hours">Credit hours:</label> {{ course_form.credit_hours }} <label for="id_class_schedule" class="second">Class schedule:</label> {{ course_form.class_schedule }} <label for="id_class_location" class="second">Class location:</label> {{ course_form.class_location }}</p>
+			<p><label for="id_syllabus">Syllabus:</label> {{ course_form.syllabus }}</p> 
+			<p><label for="id_term">Term:</label> {{ course_form.term }} <label for="id_classyear" class="second">Class year:</label> {{ course_form.classyear }}</p> 
+			<p><label for="id_instructor">Instructor:</label> {{ course_form.instructor }}
+				<br /><span class="help-text-btm">Hold down "Control", or "Command" on a Mac, to select more than one.</span>
+			</p>
+			<div class="submit-bar"> 
+		<input type="submit" value="Save Course Info" /> 
+	</div> 
+		</div>
+		
+		
+		
+{% endblock %}

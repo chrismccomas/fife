@@ -1,0 +1,63 @@
+{% extends "base_fife.html" %}
+
+{% block title %}{{ faculty.user.first_name }} {{ faculty.user.last_name }} - {% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block sidebar %}
+	
+	{% ifequal sidebar 1 %}
+		{% include "fife/faculty_sidebar.html" %}
+	{% else %}
+		{% include "fife/student_sidebar.html" %}
+	{% endifequal %}
+	
+{% endblock %}
+
+{% block content %}
+	<h1>Welcome</h1>
+	<p>Welcome {{ user.first_name }} {{ user.last_name }}. View my <a href="http://sop.ucwv.edu/fife/">courses</a> or <a href="/mayberry/logout/">logout</a>.
+
+	<h2 id="my-courses">Online Resources (On Campus)</h2>
+	<ul id="recent-announcements">
+		<li><a href="http://www.clinicalpharmacology-ip.com/">Clinical Pharmacology - Gold</a></li>
+		<li><a href="http://online.factsandcomparisons.com/">Facts &amp; Comparisons Version 4.0<br />
+		(Username: school; Password: pharmacy)</a></li>
+		<li><a href="http://gateway.ovid.com/autologin.html">International Pharmaceutical Abstracts</a></li>
+		<li><a href="http://itsnt14.its.uiowa.edu/">Iowa Drug Information Service<br />
+		(Click on "Login by IP")</a></li>
+		<li><a href="http://online.lexi.com/">Lexi-Comp Online</a></li>
+		<li><a href="http://gateway.ovid.com/autologin.html">Medline</a></li>
+		<li><a href="http://www.Thomsonhc.com/">Micromedex</a></li>
+		<li><a href="http://www.nature.com/nature/index.html">Nature</a></li>
+		<li><a href="http://proxy.ucwv.edu:2048/login?url=http://www.naturalstandard.com">Natural Standard</a></li>
+		<li><a href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=pubmed">PubMed</a></li>
+		<li><a href="http://www.sciencedirect.com/college">ScienceDirect</a></li>
+		<li><a href="http://www.naturaldatabase.com/Default.aspx?li=0&st=0&s=ND">Pharmacists' Letter &amp; Natural Medicines</a><br />(Login directions <a href="http://pharmacy.ucwv.edu/pharmletterdir.html">here</a>)</li>
+	</ul>
+	<div style="height: 25px;"></div>
+	<h2 id="lectures">Online Resources (Off Campus)</h2>
+	<ul id="recent-announcements">
+		<li><a href="http://proxy.ucwv.edu:2048/login?url=http://www.clinicalpharmacology-ip.com">Clinical Pharmacology - Gold
+		<li><a href="http://online.factsandcomparisons.com/">Facts &amp; Comparisons Version 4.0 
+		(Username: school; Password: pharmacy)
+		<li><a href="http://proxy.ucwv.edu:2048/login?url=http://gateway.ovid.com/autologin.html"><li><a href="">International Pharmaceutical Abstracts
+		<li><a href="http://proxy.ucwv.edu:2048/login?url=http://itsnt14.its.uiowa.edu/">Iowa Drug Information Service<br />
+		(Click on "Login by IP")
+		<li><a href="http://proxy.ucwv.edu:2048/login?url=http://online.lexi.com">Lexi-Comp Online
+		<li><a href="http://proxy.ucwv.edu:2048/login?url=http://gateway.ovid.com/autologin.html">Medline
+		<li><a href="http://proxy.ucwv.edu:2048/login?url=http://www.Thomsonhc.com">Micromedex 
+		<li><a href="http://proxy.ucwv.edu:2048/login?url=http://www.nature.com/nature/index.html">Nature
+		<li><a href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=pubmed">PubMed
+		<li><a href="http://proxy.ucwv.edu:2048/login?url=http://www.sciencedirect.com/college">ScienceDirect 
+		<li><a href="http://proxy.ucwv.edu:2048/login?url=http://www.naturaldatabase.com/Default.aspx?li=0&st=0&s=ND">Pharmacists' Letter &amp; Natural Medicines<br />(Login directions <a href="http://pharmacy.ucwv.edu/pharmletterdir.html">here</a>)</li>
+	</ul>
+	<div style="height: 25px;"></div>
+	<h2 id="lectures">Pharmacy Phocus</h2>
+	<ul id="recent-announcements">
+		<li>Pharmacy Phocus #2 with the Dean August 13, 2009 - Video</li>
+		<li><a href="http://pharmacy.ucwv.edu/videos/ACPEQandA.wmv">Pharmacy Phocus</a> with the Dean June 23, 2009 - Video</li>
+	</ul>
+{% endblock %}

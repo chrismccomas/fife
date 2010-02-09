@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>{% block title %}{% endblock %}University of Charleston School of Pharmacy</title>
+<link rel="shortcut icon" type="image/icon" href="http://sop.ucwv.edu/static/favicon.ICO" />
+<link rel="stylesheet" type="text/css" media="all" href="http://sop.ucwv.edu/static/css/reset.css" />
+<link rel="stylesheet" type="text/css" media="all" href="http://sop.ucwv.edu/static/css/text.css" />
+<link rel="stylesheet" type="text/css" media="all" href="http://sop.ucwv.edu/static/css/960.css" />
+<script type="text/javascript" src="http://sop.ucwv.edu/static/js/mootools.js"></script>
+<script type="text/javascript" src="http://sop.ucwv.edu/static/js/demo.js"></script>
+<style type="text/css" media="all">
+/*
+gold: #ab9c73
+red: #9d1f41
+*/
+body { background: #fff; color: #333; font-family: Helvetica, Verdana, Arial, sans-serif; font-size: 62.5%; margin: 0; padding: 0; }
+#white-bar { height: 15px; padding: 0; margin: 0; }
+#header { background: #9d1f41; height: 100px; padding: 0; margin: 0; width: 100%; }
+a { color: #9d1f41; text-decoration: none; }
+a:hover { text-decoration: underline; }
+div#footer { text-align: center; margin: 25px 0; padding: 10px 5px; font-size: 12px; border-top: 2px solid #aaa; border-bottom: 2px solid #aaa; color: #444; background:#ccc;}
+
+span.help-text-btm { color: #888; font-size: 11px; margin: 0; padding: 5px 0;}
+
+.sidebar { background: #eee; padding: 8px 5px; margin: 0; color: #555; }
+.sidebar h2 { color: #9d1f41; font-size: 1.7em; line-height: 125%; border-bottom: 1px solid #ccc; }
+ul#vertNav { /*border:1px solid #ff0000;*/ margin:0 0 30px 0; padding:0; }
+ul#vertNav li { margin:0; padding:0; list-style-type:none; }
+ul#vertNav li a { padding: 3px 3px; margin:0; font-size: 1.2em; color:#888; display:block; text-decoration:none; border-bottom: 1px solid #ddd; }
+ul#vertNav li a:hover { color: #9d1f41; border-bottom: 1px solid #aaa; }
+
+.main h1 { color: #9d1f41; font-size: 3.2em; line-height: 125%; border-bottom: 1px solid #eee; }
+.main h2 { color: #9d1f41; font-size: 1.7em; line-height: 125%; border-bottom: 1px solid #9d1f41; margin: 0; }
+.main p { font-size: 1.2em; line-height: 125%; color: #222; }
+
+ul#recent-announcements { /*border:1px solid #ff0000;*/ margin:0 0 0 0; padding:0; }
+ul#recent-announcements li { margin:0; padding:0; list-style-type:none; }
+ul#recent-announcements li {list-style-type:none; background: #eee;  padding: 3px 3px; margin:0; font-size: 1.3em; display:block; text-decoration:none; border-bottom: 1px solid #ddd; }
+
+.more { float: right; text-align: right; font-size: 1.2em; line-height: 125%; margin: 5px 0; font-weight: bold; }
+
+h3.section {
+	margin-top: 1em;
+}
+
+#vertical_slide, #horizontal_slide {
+	background: #D0C8C8;
+	color: #8A7575;
+	padding: 10px;
+	border: 5px solid #F3F1F1;
+	font-weight: bold;
+}
+
+div.marginbottom {
+	/* Since the Fx.Slide element resets margins, we set a margin on the above element */
+	margin-bottom: 10px;
+}
+
+
+	div.section { background: #f1f1f1; border: 1px solid #ccc; border-top: none; padding: 5px 8px; margin: 0; margin-bottom: 10px;}
+	div.section p { padding: 8px 0; margin: 0; border-bottom: 1px solid #ddd; font-size: 1.2em; }
+	label { line-height: 135%; margin: 0; padding: 0; color: #555; }
+	label.second { margin-left: 10px; }
+	label.text { display: block; margin: 5px 0; }
+	input.text-input { border: 1px solid #ccc;  color: #444; padding: 3px; margin: 0;}
+	input.text-input:focus { border: 1px solid #9d1f41;}
+	span.help-text { color: #888; font-size: 11px; margin-left: 15px;}
+	span.help-text-btm { color: #888; font-size: 11px; margin: 0; padding: 5px 0;}
+	div.submit-bar { padding: 8px 5px; margin: 5px 0 10px 0; background: #ccc; border: 1px solid #aaa; text-align: right; }
+	div.section p.errors { background: #CC3300; color: white; font-weight: bold; padding: 8px;}
+</style>
+{% block header %}{% endblock %}
+</head>
+<body>
+<div id="white-bar"></div>
+
+<div id="header">
+
+	<div class="container_12">
+		<a href="http://sop.ucwv.edu/fife/"><img src="http://sop.ucwv.edu/static/img/uc-top.jpg" alt="University of Charleston" width="310" height="68" border="0" /></a>
+	</div>
+</div>
+
+<div class="clear">&nbsp;</div>
+
+<div class="container_12">
+	<!--<div class="grid_12">&nbsp;</div>-->
+
+	<div class="grid_4 sidebar">
+		<h2>MENU</h2>
+		{% block sidebar %}
+		
+		{% endblock %}
+	</div>
+	<!-- end .grid_4 -->
+	<div class="grid_8 main">
+		{% block content %}
+		
+		{% endblock %}
+		
+	</div>
+	
+	<div class="clear">&nbsp;</div>
+	
+	<div id="footer"><strong>FIFE</strong>. &copy; Copyright 2009 University of Charleston School of Pharmacy. For assistance contact <a href="mailto:donhodges@ucwv.edu">Don Hodges</a> or <a href="mailto:chrismccomas@ucwv.edu">Christopher McComas</a>.</div>
+	
+</div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8515131-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>

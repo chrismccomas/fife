@@ -1,0 +1,8 @@
+{{  student.user.first_name }}:
+ 
+An announcement titled, {{ new_announcement.title }} has been added to the course {{ course.short }}.
+ 
+You can view the announcement here: 
+
+Just testing
+
