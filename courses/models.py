@@ -8,7 +8,7 @@ from django.contrib.localflavor.us.models import PhoneNumberField
 University of Charleston School of Pharmacy Course Management Application
 Developed by Christopher McComas
 Version: 0.1
-Date: 04-20-2009
+Date: 02-09-2010
 """
 	
 class TermLive(models.Manager):
