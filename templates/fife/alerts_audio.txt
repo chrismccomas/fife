@@ -1,6 +1,0 @@
-{{  student.user.first_name }}:
- 
-A new audio lecture has been added to the course {{ course.short }}.
- 
-You can download the audio lecture here: http://sop.ucwv.edu/fife/course/{{ course.pk }}/#audio-{{ new_audio.pk }}
-
