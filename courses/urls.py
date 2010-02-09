@@ -1,7 +1,4 @@
 from django.conf.urls.defaults import *
-from django.views.generic.simple import direct_to_template
-from ucwv.fife.views import *
-from ucwv.fife.models import *
 
 urlpatterns = patterns('',
 	(r'^$', landing_page),

@@ -1,4 +1,4 @@
-from ucwv.fife.models import *
+from fife.courses.models import *
 from django.contrib import admin
 
 class ResourceAdmin(admin.ModelAdmin):

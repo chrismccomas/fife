@@ -1,20 +1,15 @@
 import datetime
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
-from django.contrib.auth.views import redirect_to_login
+from django.template import RequestContext, loader, Context
 from django.forms.models import modelformset_factory, inlineformset_factory
-from django.template import loader, Context
-from django.forms.formsets import formset_factory
-from django.shortcuts import render_to_response
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.models import User, Group
-from ucwv.bio.models import Biography
 from django.core.mail import EmailMultiAlternatives
 from django.db.models import Q
-from ucwv.fife.models import *
-from ucwv.fife.forms import *
+
+from fife.courses.models import *
+from fife.courses.forms import *
 
 def landing_page(request):
 	if request.user.is_authenticated():
