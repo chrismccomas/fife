@@ -10,72 +10,23 @@ Developed by Christopher McComas
 Version: 0.1
 Date: 04-20-2009
 """
-
-FACULTY_STATUS = 1
-STAFF_STATUS = 2
-STUDENT_STATUS = 3
-USER_CHOICES = (
-	(FACULTY_STATUS, 'Faculty'),
-	(STAFF_STATUS, 'Staff'),
-	(STUDENT_STATUS, 'Student'),
-)
-	
-class SidebarLinks(models.Model):
-	"""
-	This model is for the links on the left side of each page.
-	"""
-	title = models.CharField(max_length=250,)
-	url = models.CharField(max_length=500,)
-	sidebar = models.IntegerField(choices=USER_CHOICES, default=FACULTY_STATUS,)
-	order = models.IntegerField()
-	
-	class Meta:
-		verbose_name_plural = 'Sidebar Links'
-		ordering = ('sidebar', 'order')
-		
-	def __unicode__(self):
-		return '%s' % (self.title)
-		
-class ClassYearLive(models.Manager):
-	"""
-	Get only the Class Years that are currently set to active
-	"""
-	def get_query_set(self):
-		return super(ClassYearLive,
-				self).get_query_set().filter(active=1)
-					
-class ClassYear(models.Model):
-	"""
-	This model is for the class years, example: Class of 2010, 2011, etc
-	The group field is a foreign key link to django.groups that match the class list to easily assign students to their class year
-	"""
-	title = models.CharField(max_length=250,)
-	group = models.ForeignKey(Group, unique=True)
-	active = models.BooleanField()
-	
-	objects = models.Manager()
-	year_live = ClassYearLive()
-	
-	def __unicode__(self):
-		return '%s' % (self.title)
 	
 class TermLive(models.Manager):
 	"""
 	Get only the Terms that are currently set to active
 	"""
 	def get_query_set(self):
-		return super(TermLive,
-				self).get_query_set().filter(active=1)
+		return super(TermLive, self).get_query_set().filter(active=True)
 				
 class Term(models.Model):
 	"""
 	This model is for the school term, example: Fall 2009, Spring 2010, etc.
 	"""
-	short = models.CharField("Short Title", max_length=4, help_text="Format: F09",)
+	short = models.CharField("Short Title", max_length=10, help_text="Format: F09",)
 	year = models.CharField(max_length=4,)
 	title = models.CharField("Full Title", max_length=100, help_text="Format: Fall 2009",)	
-	active = models.BooleanField()
 	
+	active = models.BooleanField()
 	objects = models.Manager()
 	term_live = TermLive()
 	
@@ -87,20 +38,19 @@ class FacultyLive(models.Manager):
 	Get only the Faculty Members that are currently set to active
 	"""
 	def get_query_set(self):
-		return super(FacultyLive,
-				self).get_query_set().filter(active=1)
+		return super(FacultyLive, self).get_query_set().filter(active=True)
 				
 class Faculty(models.Model):
 	"""
-	This model is for the faculty members, teaching courses at UCSOP.
-	The user field is a foreign key link to django.users that match the faculty member to draw their information including name, email address, etc
+	This model is for the faculty members that will be teaching courses.
+	The 'user' field is a foreign key link to Users that match the faculty member to draw their information including name, email address, etc
 	"""
 	user = models.ForeignKey(User, unique=True, limit_choices_to={'groups': 1})
 	office_hours = models.CharField(max_length=25, blank=True,)
 	office_location =  models.CharField(max_length=25, blank=True,)
-	active = models.BooleanField()
 	phone_number = PhoneNumberField('Office Phone', blank=True,)
 	
+	active = models.BooleanField()
 	objects = models.Manager()
 	faculty_live = FacultyLive()
 	
@@ -116,32 +66,34 @@ class CourseLive(models.Manager):
 	Get only the Courses that are currently set to active
 	"""
 	def get_query_set(self):
-		return super(CourseLive,
-				self).get_query_set().filter(active=1)
+		return super(CourseLive, self).get_query_set().filter(active=True)
 							
 class Course(models.Model):
 	"""
 	This model is for the faculty members, teaching courses at UCSOP.
-	The term field is a foreign key link to the Term model, only getting those Terms that are set to active
-	The instructor field is a foreign key link to the Faculty model, only getting those Faculty Members that are set to active
-	The classyear field is a foreign key link to the ClassYear model, only getting those class years that are set to active
+	The 'term' field is a foreign key link to the Term model, only getting those Terms that are set to active
+	The 'course_coordinator' field is a foreign key link to the Faculty model, only getting those Faculty Members that are set to active
+	The 'instructor' field is a foreign key link to the Faculty model, only getting those Faculty Members that are set to active
 	"""
 	title = models.CharField("Full Title", max_length=250, help_text="Format: PHAR510: Introduction to Pharmacy Practice and Law",)
 	short = models.CharField("Short Title", max_length=10, help_text="Format: PHAR510",)
-	instructor = models.ManyToManyField(Faculty, related_name='course_instructor', limit_choices_to={'active': True}, blank=True,)
 	course_description = models.TextField(blank=True,)
 	credit_hours = models.CharField(max_length=3, blank=True,)
 	class_schedule = models.CharField(max_length=250, blank=True,)
 	class_location = models.CharField(max_length=250, blank=True,)
 	syllabus = models.FileField(upload_to='fife/syllabus', blank=True, null=True,)
 	
-	term = models.ForeignKey(Term,)
-	classyear = models.ForeignKey(ClassYear, limit_choices_to={'active': True})
+	# Course Availability
+	start_date = models.DateTimeField(blank=True, null=True,)
+	end_date = models.DateTimeField(blank=True, null=True,)
 	
+	term = models.ForeignKey(Term,)
+	course_coordinator = models.ManyToManyField(Faculty, related_name='course_coordinator', limit_choices_to={'active': True}, blank=True,)
+	instructor = models.ManyToManyField(Faculty, related_name='course_instructor', limit_choices_to={'active': True}, blank=True,)
+	
+	active = models.BooleanField()
 	objects = models.Manager()
 	course_live = CourseLive()
-	
-	course_coordinator = models.ManyToManyField(Faculty, related_name='course_coordinator', limit_choices_to={'active': True}, blank=True,)
 	
 	class Meta:
 		ordering = ['title']
@@ -152,25 +104,26 @@ class Course(models.Model):
 	def __unicode__(self):
 		return '%s %s' % (self.term, self.short)
 
-class RequiredBookLive(models.Manager):
+class BookLive(models.Manager):
 	"""
-	Get only the RequiredBook that are currently set to active
+	Get only the Book that are currently set to active
 	"""
 	def get_query_set(self):
-		return super(RequiredBookLive,
-			self).get_query_set().filter(active=1)
+		return super(BookLive, self).get_query_set().filter(active=True)
 							
-class RequiredBook(models.Model):
+class Book(models.Model):
 	"""
-	This model is for the Required Books for each course.
-	The course field is a foreign key link to the Course model, only getting those Courses that are set to active
+	This model is for the book for each course.
+	The 'course' field is a foreign key link to the Course model, only getting those Courses that are set to active
 	"""
 	title = models.CharField(max_length=250,)
 	description = models.TextField(blank=True,)
 	link = models.URLField(verify_exists=False, blank=True,)
-	course = models.ForeignKey(Course, limit_choices_to={'term__active': True})
-	active = models.BooleanField(default=True,)
+	required = models.BooleanField(default=True,)
 	
+	course = models.ForeignKey(Course, limit_choices_to={'term__active': True})
+	
+	active = models.BooleanField(default=True,)
 	objects = models.Manager()
 	book_live = RequiredBookLive()
 	
@@ -179,25 +132,26 @@ class RequiredBook(models.Model):
 
 class AnnouncementLive(models.Manager):
 	"""
-	Get only the Announcement that are currently set to active
+	Get only the course Announcements that are currently set to active
 	"""
 	def get_query_set(self):
-		return super(AnnouncementLive,
-			self).get_query_set().filter(active=1)
+		return super(AnnouncementLive, self).get_query_set().filter(active=2)
 					
 class Announcement(models.Model):
 	"""
-	This model is for the class Announcements for each course.
-	The course field is a foreign key link to the Course model, only getting those Courses that are set to active
+	This model is for the Announcements for each course.
+	The 'course' field is a foreign key to the Course model, only getting those Courses that are set to active
+	The 'user' field is a foreign key to the User model, this will be the individual that submitted the announcement
 	"""
 	created_date = models.DateTimeField(auto_now=True,)
-	course = models.ForeignKey(Course, limit_choices_to={'term__active': True})
-	user = models.ForeignKey(User, limit_choices_to={'groups': 1})
 	title = models.CharField(max_length=250,)
 	message = models.TextField()
 	email = models.BooleanField()
-	active = models.BooleanField(default=True,)
 	
+	course = models.ForeignKey(Course, limit_choices_to={'term__active': True})
+	user = models.ForeignKey(User, limit_choices_to={'groups': 1})
+	
+	active = models.BooleanField(default=True,)
 	objects = models.Manager()
 	announcement_live = AnnouncementLive()
 	
@@ -212,13 +166,12 @@ class LectureLive(models.Manager):
 	Get only the Lectures that are currently set to active
 	"""
 	def get_query_set(self):
-		return super(LectureLive,
-			self).get_query_set().filter(active=1)	
+		return super(LectureLive, self).get_query_set().filter(active=True)	
 			
 class Lecture(models.Model):
 	"""
 	This model is for the class Lectures for each course.
-	The course field is a foreign key link to the Course model, only getting those Courses that are set to active
+	The 'course' field is a foreign key link to the Course model, only getting those Courses that are set to active
 	"""
 	created_date = models.DateTimeField(auto_now=True,)
 	course = models.ForeignKey(Course, limit_choices_to={'term__active': True})
@@ -226,9 +179,10 @@ class Lecture(models.Model):
 	lecture_date = models.DateField("Date of Lecture",)
 	speaker = models.CharField(max_length=250, blank=True, help_text="Only enter if speaker is a non UCSOP faculty member",)
 	powerpoint = models.FileField("File", upload_to='fife/lectures', blank=True, null=True,)
-	user = models.ForeignKey(User,)
-	active = models.BooleanField(default=True,)
 	
+	user = models.ForeignKey(User,)
+	
+	active = models.BooleanField(default=True,)
 	objects = models.Manager()
 	lecture_live = LectureLive()
 	
